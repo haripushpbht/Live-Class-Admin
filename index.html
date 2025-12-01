@@ -173,7 +173,28 @@ stopBtn.addEventListener('click', ()=>{
 function extractId(input){
   if(!input) return null;
   input = input.trim();
+
+  // Direct 11‑char ID
   if(/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+
+  // youtu.be/VIDEOID
+  let m = input.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+
+  // youtube.com/watch?v=VIDEOID
+  m = input.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+
+  // youtube.com/embed/VIDEOID
+  m = input.match(/embed\/([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+
+  // NEW → youtube.com/live/VIDEOID or youtube.com/live/VIDEOID?feature=share
+  m = input.match(/\/live\/([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+
+  return null;
+}$/.test(input)) return input;
   let m = input.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
   if(m) return m[1];
   m = input.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
