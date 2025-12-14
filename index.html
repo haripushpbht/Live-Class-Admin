@@ -28,10 +28,11 @@ header h1{
     max-width:900px;
     margin:40px auto;
     padding:20px;
-    background:#121824;
+    background:linear-gradient(to right, #121824, #0d1117);
     border-radius:14px;
     box-shadow:0 8px 22px rgba(0,0,0,.6);
     text-align:center;
+    backdrop-filter:blur(5px);
 }
 
 .live-title{
@@ -46,12 +47,62 @@ header h1{
     height:500px;
     border-radius:14px;
     overflow:hidden;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.05);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .video-frame iframe{
     width:100%;
     height:100%;
     border:none;
+}
+
+.waiting-banner{
+    font-size:1.4rem;
+    font-weight:700;
+    color:#000;
+    background: linear-gradient(135deg, #ffbf00, #e69100);
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    border-radius:14px;
+}
+
+.admin-panel{
+    max-width:900px;
+    margin:20px auto;
+    text-align:center;
+}
+
+.admin-panel input{
+    padding:8px;
+    width:60%;
+    border-radius:6px;
+    border:none;
+    margin-right:10px;
+}
+
+.admin-panel button{
+    padding:8px 15px;
+    background:#ffbf00;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    margin-top:30px;
+    background:#161b22;
+    font-weight:600;
 }
 </style>
 </head>
@@ -65,15 +116,35 @@ header h1{
 <div class="live-box">
     <div class="live-title">📡 LIVE CLASS</div>
 
-    <div class="video-frame">
-        <iframe
-            src="https://www.youtube.com/embed/VeN79gr9LgY?autoplay=1&mute=1&rel=0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>
+    <div class="video-frame" id="videoArea">
+        <div class="waiting-banner">🚀 Class Will Start Soon!<br>Stay Ready Students!</div>
     </div>
 </div>
 
+<div class="admin-panel">
+    <input type="text" id="liveInput" placeholder="Paste YouTube Video ID here">
+    <button onclick="updateLive(document.getElementById('liveInput').value)">Update Live</button>
+</div>
+
+<footer>
+    © 2025 MD Gurukul - All Rights Reserved
+</footer>
+
+<script>
+// Function to update live video
+function updateLive(id){
+    if(id.trim() === ""){
+        alert("Please enter a valid Video ID");
+        return;
+    }
+    document.getElementById("videoArea").innerHTML = `
+        <iframe 
+            src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+        </iframe>`;
+}
+</script>
+
 </body>
 </html>
-
