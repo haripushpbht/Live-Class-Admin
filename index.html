@@ -1,176 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MD Gurukul Live Class</title>
 
 <style>
-    body {
-        margin: 0;
-        background-color: #0d1117;
-        color: white;
-        font-family: "Segoe UI", sans-serif;
-    }
+body {
+    margin: 0;
+    background-color: #0d1117;
+    color: #ffffff;
+    font-family: "Segoe UI", sans-serif;
+}
 
-    header {
-        background: #161b22;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 30px;
-        box-shadow: 0 2px 6px rgba(0,0,0,.6);
-    }
-    header .logo {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    header img {
-        height: 50px;
-    }
-    header h1 {
-        color: #ffbf00;
-        font-size: 1.6em;
-        margin: 0;
-    }
-    nav a {
-        color: #c9d1d9;
-        margin-left: 20px;
-        text-decoration: none;
-        font-weight: 600;
-    }
-    nav a:hover {
-        color: #ffbf00;
-    }
+header {
+    background: #161b22;
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-    .live-box {
-        width: 90%;
-        max-width: 900px;
-        margin: 60px auto;
-        padding: 25px;
-        border-radius: 15px;
-        background: linear-gradient(to right, #121824, #0d1117);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .6);
-        backdrop-filter: blur(10px);
-        text-align: center;
-        animation: fadeUP .7s ease-in-out;
-    }
+header h1 {
+    color: #ffbf00;
+    margin: 0;
+}
 
-    @keyframes fadeUP {
-        from { transform: translateY(40px); opacity: 0; }
-        to { transform: translateY(0px); opacity: 1; }
-    }
+.live-box {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #121824;
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.6);
+    text-align: center;
+}
 
-    .live-title {
-        font-size: 2em;
-        font-weight: bold;
-        color: #ffbf00;
-        margin-bottom: 10px;
-        letter-spacing: 0.5px;
-    }
+.live-title {
+    font-size: 1.8rem;
+    color: #ffbf00;
+    font-weight: 700;
+}
 
-    .glass-frame {
-        width: 100%;
-        height: 500px;
-        margin-top: 20px;
-        border-radius: 16px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, .15);
-        background: rgba(255, 255, 255, .05);
-        backdrop-filter: blur(16px);
-    }
+.glass-frame {
+    margin-top: 15px;
+    width: 100%;
+    height: 500px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.15);
+}
 
-    .waiting-banner {
-        height: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.6rem;
-        text-transform: uppercase;
-        font-weight: 700;
-        background: linear-gradient(135deg, #ffbf00, #e69100);
-        color: black;
-    }
+.glass-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 
-    footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 50px;
-        background: #161b22;
-        font-weight: 600;
-    }
+.waiting-banner {
+    height: 100%;
+    background: linear-gradient(135deg, #ffbf00, #e69500);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
 </style>
-
 </head>
 
 <body>
 
 <header>
-    <div class="logo">
-        <img src="logo.png" alt="MD GURUKUL">
-        <h1>MD GURUKUL</h1>
-    </div>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Admission</a>
-        <a href="#">Live Classes</a>
-        <a href="#">Notes</a>
-    </nav>
+    <h1>MD GURUKUL – LIVE CLASS</h1>
 </header>
 
 <div class="live-box">
     <div class="live-title">📡 LIVE CLASS</div>
-    <div id="videoArea" class="glass-frame"></div>
+    <div id="videoArea" class="glass-frame">
+        <div class="waiting-banner">⏳ Checking Live Status...</div>
+    </div>
 </div>
 
-<footer>
-    © 2025 MD Gurukul - All Rights Reserved
-</footer>
-
-
-<!-- AUTO DETECT LIVE SCRIPT -->
 <script>
-
-const API_KEY = "AIzaSyB3_Sdvg5sc-VtLtp-saCGQ9NZ9z-0WgL4";                 
-const CHANNEL_ID = "UCRh_MHpdDo9zHwxa9Xu_t2w"; 
+/* ============================
+   CONFIG – CHANGE ONLY THIS
+=============================== */
+const API_KEY = "AIzaSyB3_Sdvg5sc-VtLtp-saCGQ9NZ9z-0WgL4";        // 🔐 Restrict this
+const CHANNEL_ID = "UCRh_MHpdDo9zHwxa9Xu_t2w"; // Your YouTube channel
 
 async function checkLive() {
-    const url =
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${API_KEY}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
 
     try {
         const res = await fetch(url);
         const data = await res.json();
 
-        // If Live Video Found
         if (data.items && data.items.length > 0) {
-            const liveVideoID = data.items[0].id.videoId;
+            const liveId = data.items[0].id.videoId;
 
             document.getElementById("videoArea").innerHTML = `
                 <iframe 
-                    src="https://www.youtube.com/embed/${liveVideoID}?autoplay=1&mute=0&rel=0&modestbranding=1&controls=1" 
+                    src="https://www.youtube.com/embed/${liveId}?autoplay=1&mute=1&rel=0"
                     allow="autoplay; encrypted-media"
                     allowfullscreen>
                 </iframe>`;
-        } 
-        else {
-            // No Live → Fallback Banner
+        } else {
             document.getElementById("videoArea").innerHTML = `
-               <div class="waiting-banner">
-                   🚀 Class Will Start Soon <br>
-                   Stay Ready Students!
-               </div>`;
+                <div class="waiting-banner">
+                    🚀 Class Will Start Soon
+                </div>`;
         }
-
     } catch (err) {
-        console.error("Error:", err);
         document.getElementById("videoArea").innerHTML = `
-           <div class="waiting-banner">
-              ⚠ API Error - Try Later
-           </div>`;
+            <div class="waiting-banner">
+                ⚠ Unable to Load Live
+            </div>`;
     }
 }
 
